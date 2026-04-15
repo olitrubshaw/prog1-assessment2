@@ -6,13 +6,15 @@ public class Challenge_Class {
     public static void main(String[] args) {
         //create an array to store the values of the dataset
         String[] dataset = {
-                "b_lovely_landscapes.txt",
-                "c_memorable_moments.txt",
-                "d_pet_pictures.txt",
-                "e_shiny_selfies.txt",
+                "/Users/abc/Desktop/year 1/programming/coursework/coursework 2/challenge_sol/src/Challenge_sol/b_lovely_landscapes.txt",
+                "/Users/abc/Desktop/year 1/programming/coursework/coursework 2/challenge_sol/src/Challenge_sol/c_memorable_moments.txt",
+                "/Users/abc/Desktop/year 1/programming/coursework/coursework 2/challenge_sol/src/Challenge_sol/d_pet_pictures.txt",
+                "/Users/abc/Desktop/year 1/programming/coursework/coursework 2/challenge_sol/src/Challenge_sol/e_shiny_selfies.txt",
         };
+        //print the interest value
         for (String datasetFile : dataset) {
-            solveDataset(datasetFile);
+            int score = solveDataset(datasetFile);
+            System.out.println(datasetFile + " interest score = " + score);
         }
     }
     //create function to calculate best interest pairing for both
@@ -29,7 +31,7 @@ public class Challenge_Class {
         return Math.min(common.size(), Math.min(onlyA.size(), onlyB.size()));
     }
     //solver for each dataset
-    public static void solveDataset(String datasetFile) {
+    public static int solveDataset(String datasetFile) {
         try {
             //create a new list for the txt files
             List<Photo> photos = readInput(datasetFile);
@@ -49,14 +51,17 @@ public class Challenge_Class {
             Map<String, List<Integer>> tagIndex = buildTagIndex(slides);
             //builds the slideshow ready for output
             List<Integer> slideshow = buildSlideshow(slides, tagIndex);
+            int totalScore = 0;
+            for (int i = 0; i < slideshow.size() - 1s; i++) {
+                totalScore += interest(slides.get(slideshow.get(i)), slides.get(slideshow.get(i + 1)));
+            }
+            return totalScore;
             //outputs slideshow
-            String outputFile = datasetFile + "_slideshow.txt";
-            writeOutput(outputFile, slideshow, slides);
-            System.out.println("built " + datasetFile);
             //https://www.w3schools.com/java/java_map.asp
             //https://stackoverflow.com/questions/8231631/creating-a-simple-index-on-a-text-file-in-java
         } catch (Exception e) {
             e.printStackTrace();
+            return 0;
         }
     }
     public static List<Photo> readInput(String filename) throws IOException{
